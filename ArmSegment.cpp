@@ -2,7 +2,8 @@
 #include <string>
 #include <sstream>
 #include <cmath>
-#include "Vector.h"
+#include "Vect.h"
+#include "ArmSegment.h"
 
 #define pi 3.14159265359
 
@@ -20,28 +21,6 @@
  * it's easier to compute r first, then use it as the denominator (assuming ![x
  * = y = z = 0]).  *
  */
-
-    class ArmSegment{
-      public:
-        //variables
-        double calculatedAngle;  // Degrees
-        Vect endPoint;
-        Vect mountPoint;
-        double length;
-        double angle; // degrees
-        double maxAngle; // degrees
-
-        //functions
-        ArmSegment(double length, double angle, double maxAngle);
-        void updateEndpoint(ArmSegment mountedOnArm);
-        double toRadians(double angleInDegrees);
-        double toDegrees(double radians);
-        std::string toString();
-        void setAngle(double d);
-        void rotateMe(Vect targetEndpoint, Vect armEndpoint);
-        private:
-        //std::string doubleToString(double value);
-    };
 
     // ArmSegment::ArmSegment() {
     // }
@@ -82,10 +61,10 @@
 
     
     std::string ArmSegment::toString() {
-        // return "Arm mountpoint:" + doubleToString(mountPoint.x) + "," +
-        // doubleToString(mountPoint.y) + 
-        // " endpoint:" + doubleToString(endPoint.x) + "," + doubleToString(endPoint.y);
-        return "I coudnt fix this yet so I return this random string";
+        return "Arm mountpoint:" + doubleToString(mountPoint.x) + "," +
+        doubleToString(mountPoint.y) + 
+        " endpoint:" + doubleToString(endPoint.x) + "," + doubleToString(endPoint.y);
+       // return "I coudnt fix this yet so I return this random string";
     }
 
     void ArmSegment::setAngle(double d) {
@@ -139,9 +118,9 @@
         if ( angle < -maxAngle ) angle = -maxAngle ; 
     }
 
-    // std::string doubleToString(double value){
-    //     std::ostringstream strs;
-    //     strs << value;
-    //     std::string str = strs.str();
-    //     return str;
-    // }
+    std::string ArmSegment::doubleToString(double value){
+        std::ostringstream strs;
+        strs << value;
+        std::string str = strs.str();
+        return str;
+    }

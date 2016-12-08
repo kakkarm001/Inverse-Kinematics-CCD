@@ -1,7 +1,8 @@
 
 //import java.util.ArrayList;
-#include "Vector.h"
-#include "ArmSegment.cpp"
+#include "Vect.h"
+#include "Arm.h"
+#include "ArmSegment.h"
 #include <vector>
 #include <string>
 #include <iostream>
@@ -17,23 +18,7 @@
     
    
     // GraphicsContext gc;
-    // private Canvas canvas;
-   
-    class Arm {
-         
-        public:
-            std::vector<ArmSegment> segments;
-            Vect endPoint;
-
-            Arm();
-            void reset();
-            std::string toString();
-            void updateArm();
-            void setArmAngle(double d,int armIndex);
-            void moveEndpointToDest(Vect ep);
-
-    };    
-
+    // private Canvas canvas
     Arm::Arm(){
         //for (int i = 0 ; i < 30 ; i++) 
         //    segments.add(new ArmSegment(7.0,0.0,120)) ;
@@ -50,6 +35,8 @@
         for(int i=1;i<numSegments;i++){                
             segments[i].setAngle(0);
         }
+        //debug
+        std::cout << "Arm.reset()\n";
     }
 
     std::string Arm::toString() {
@@ -60,6 +47,9 @@
         ArmSegment mountPoint(0.0,0.0,0) ;
         for(int i=1;i<numSegments;i++){                
             segments[i].updateEndpoint(mountPoint);
+
+            std::cout << "\n DURING POSITION FOR : " + i;  
+            std::cout <<  segments[i].toString() + "\n";
             mountPoint = segments[i];
         }
         // Endpoint arm is endpoint last segement.
@@ -82,9 +72,9 @@
         int loopcount = 0 ;
         
         while (!ep.equals(endPoint)) { 
-            if ( loopcount++ == 100 ) break ;
+            if ( loopcount++ == 1000 ) break ;
             while ( back >= 0 ) {
-                segments[back].rotateMe(ep,endPoint) ;
+                segments[back].rotateMe(ep, endPoint) ;
                 updateArm();
                 back-- ;
             }
@@ -93,7 +83,7 @@
             //INSERT REAL ARM CODE HERE
             
             back = numSegments - 1 ;
-            cout << loopcount + "\n";
+           // std::cout << loopcount + "\n";
            // Thread.sleep(20);
             //System.out.println(loopcount);
         }

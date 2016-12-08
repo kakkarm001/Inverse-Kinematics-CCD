@@ -1,8 +1,8 @@
 
 #include <math.h>
-#include "Arm.cpp"
+#include "Arm.h"
 #include <cstring>
-#include "Vector.h"
+#include "Vect.h"
 #include <iostream>
 
 using namespace std;
@@ -32,17 +32,25 @@ using namespace std;
              }
             ax.setPosition(100);*/
 
-            cout << "New position: ";  
             //create new position vector
-            Vect newDest(120.0, 100.0, 0.0);
+            Vect newDest(80.0, 100.0, 0.0);
 
-            cout <<  newDest.getX();  
+            cout << "\n BEFORE POSITION: ";  
+            // cout <<  newDest.getX();  
+            // cout <<  newDest.getY();  
+            // cout <<  newDest.getZ();  
+             cout <<  a.toString()+"\n";
+            
 
             a.reset();
             a.updateArm();
             //move arm to new dest
 
-           // a.moveEndpointToDest(new Vector3d((250 - t.getY()), (t.getX() - 300), 0));
+            a.moveEndpointToDest(newDest);
+
+            cout << "\n AFTER POSITION: ";  
+            cout <<  a.toString()+"\n";
+
              // gc.fillOval((t.getX()), (t.getY()), 6, 5);
             //gc.clearRect(0, 0, 600, 250);
             //a.drawArm();

@@ -1,40 +1,43 @@
-#pragma once
+	
+#include "Vect.h"
 #include <math.h>
 
-class Vect {
-private:
+	Vect::Vect() {
+		x = 0;
+		y = 0;
+		z = 0;
+	}
 
-public:
-	double x;
-	double y;
-	double z;
+	Vect::Vect(double x, double y, double z) {
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 
-	Vect();
-	Vect(double, double, double);
 
-	double getX() { return x; }
-	double getY() { return y; }
-	double getZ() { return z; }
+	double Vect::getX() { return x; }
+	double Vect::getY() { return y; }
+	double Vect::getZ() { return z; }
 
-	double length() {
+	double Vect::length() {
 		return sqrt((x * x) + (y * y) + (z * z));
 	}
 
-	Vect normalized() {
+	Vect Vect::normalized() {
 		double mag = length();
 
 		return Vect(x / mag, y / mag, z / mag);
 	}
 
-	Vect neg() {
+	Vect Vect::neg() {
 		return Vect(-x, -y, -z);
 	}
 
-	double dot(Vect other) {
+	double Vect::dot(Vect other) {
 		return x * other.getX() + y * other.getY() + z * other.getZ();
 	}
 
-	double angle(Vect other) {
+	double Vect::angle(Vect other) {
 		double dot = this->dot(other);
 		/* need to doublecheck if angle calculation is right*/
 		double otherLength = other.length();
@@ -43,7 +46,7 @@ public:
 			return angle;
 	}
 
-	Vect cross(Vect other) {
+	Vect Vect::cross(Vect other) {
 		double x_ = y * other.getZ() - z * other.getY();
 		double y_ = z * other.getX() - x * other.getZ();
 		double z_ = x * other.getY() - y * other.getX();
@@ -51,39 +54,27 @@ public:
 		return Vect(x_, y_, z_);
 	}
 
-	Vect operator + (const Vect &other) {
+	Vect Vect::operator + (const Vect &other) {
 		return Vect(x + other.x, y + other.y, z + other.z);
 	}
 
-	Vect operator - (const Vect &other) {
+	Vect Vect::operator - (const Vect &other) {
 		return Vect(x - other.x, y - other.y, z - other.z);
 	}
 
-	Vect operator * (const Vect &other) {
+	Vect Vect::operator * (const Vect &other) {
 		return Vect(x * other.x, y * other.y, z * other.z);
 	}
 
-	Vect operator / (const Vect &other) {
+	Vect Vect::operator / (const Vect &other) {
 		return Vect(x / other.x, y / other.y, z / other.z);
 	}
 
-	bool equals(Vect other) { //doublecheck if works
+	bool Vect::equals(Vect other) { //doublecheck if works
 		if(other.x == x && other.y == y && other.z == z){
 			return true;
 		} 
 
 		return false;
 	}
-};
 
-Vect::Vect() {
-	x = 0;
-	y = 0;
-	z = 0;
-}
-
-Vect::Vect(double x, double y, double z) {
-	this->x = x;
-	this->y = y;
-	this->z = z;
-}
