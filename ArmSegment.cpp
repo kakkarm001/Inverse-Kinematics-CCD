@@ -1,9 +1,8 @@
 
-#include <cstring>
+#include <string>
+#include <sstream>
 #include <cmath>
 #include "Vector.h"
-
-using namespace std;
 
 #define pi 3.14159265359
 
@@ -24,13 +23,24 @@ using namespace std;
 
     class ArmSegment{
       public:
+        //variables
         double calculatedAngle;  // Degrees
         Vect endPoint;
         Vect mountPoint;
-
-        double lenght;
+        double length;
         double angle; // degrees
         double maxAngle; // degrees
+
+        //functions
+        ArmSegment(double length, double angle, double maxAngle);
+        void updateEndpoint(ArmSegment mountedOnArm);
+        double toRadians(double angleInDegrees);
+        double toDegrees(double radians);
+        std::string toString();
+        void setAngle(double d);
+        void rotateMe(Vect targetEndpoint, Vect armEndpoint);
+        private:
+        //std::string doubleToString(double value);
     };
 
     // ArmSegment::ArmSegment() {
@@ -41,26 +51,29 @@ using namespace std;
         // mountPoint = new Vector3d();
         
 
-        this.angle = angle;
-        this.lenght = length;
-        this.maxAngle = maxAngle;
+        this->angle = angle;
+        this->length = length;
+        this->maxAngle = maxAngle;
     }
 
-    void updateEndpoint(ArmSegment mountedOnArm) {
+    void ArmSegment::updateEndpoint(ArmSegment mountedOnArm) {
         calculatedAngle = mountedOnArm.calculatedAngle + angle;
         // NOTE: Angle is 90 degrees shifted counter clock wise.
-        endPoint.x = mountedOnArm.endPoint.x + lenght * cos(toRadians(calculatedAngle));
-        endPoint.y = mountedOnArm.endPoint.y + lenght * sin(toRadians(calculatedAngle));
+        endPoint.x = mountedOnArm.endPoint.x + length * cos(toRadians(calculatedAngle));
+        endPoint.y = mountedOnArm.endPoint.y + length * sin(toRadians(calculatedAngle));
 
         mountPoint.x = mountedOnArm.endPoint.x;
         mountPoint.y = mountedOnArm.endPoint.y;
         mountPoint.z = mountedOnArm.endPoint.z;
     }
 
-    double toRadians(angleInDegrees){
-         reuturn (degrees * pi)  / 180; //TODO: maybe turn into double
+    double ArmSegment::toRadians(double angleInDegrees){
+         return (angleInDegrees * pi)  / 180; //TODO: maybe turn into double
     }
 
+    double ArmSegment::toDegrees(double radians) {
+        return radians * (180.0 / pi);
+    }
 
     // void drawSegment(GraphicsContext gc) {
     //     gc.strokeLine(300 + mountPoint.y, 250 - mountPoint.x, 300 + endPoint.y, 250 - endPoint.x);
@@ -68,12 +81,15 @@ using namespace std;
     // }
 
     
-    String toString() {
-        return "Arm mountpoint:" + mountPoint.x + "," + mountPoint.y + " endpoint:" + endPoint.x + "," + endPoint.y;
+    std::string ArmSegment::toString() {
+        // return "Arm mountpoint:" + doubleToString(mountPoint.x) + "," +
+        // doubleToString(mountPoint.y) + 
+        // " endpoint:" + doubleToString(endPoint.x) + "," + doubleToString(endPoint.y);
+        return "I coudnt fix this yet so I return this random string";
     }
 
-    void setAngle(double d) {
-        this.angle = d;
+    void ArmSegment::setAngle(double d) {
+        this->angle = d;
     }
 
     
@@ -82,7 +98,7 @@ using namespace std;
  * @param  targetEndpoint armEndpoint          
  * @return void.
  */
-    void rotateMe(Vect targetEndpoint, Vect armEndpoint) {
+    void ArmSegment::rotateMe(Vect targetEndpoint, Vect armEndpoint) {
         Vect r;
         Vect p;
         Vect cross;
@@ -97,7 +113,8 @@ using namespace std;
 
         double adiff = toDegrees(p.angle(r));
 
-        cross.cross(r, p);
+        cross = r.cross(p); //doublecheck if r or p should be used or if it dousnt matter
+
         // Which way to rotate  3d trick
         if ( adiff < 10 ) {
             adiff /= 1 ;
@@ -122,3 +139,9 @@ using namespace std;
         if ( angle < -maxAngle ) angle = -maxAngle ; 
     }
 
+    // std::string doubleToString(double value){
+    //     std::ostringstream strs;
+    //     strs << value;
+    //     std::string str = strs.str();
+    //     return str;
+    // }

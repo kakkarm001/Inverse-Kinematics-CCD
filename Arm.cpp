@@ -1,11 +1,11 @@
 
 //import java.util.ArrayList;
 #include "Vector.h"
+#include "ArmSegment.cpp"
 #include <vector>
-#include <cstring>
+#include <string>
+#include <iostream>
 
-
-using namespace std;
 #define numSegments 3
 
 
@@ -15,56 +15,69 @@ using namespace std;
  * @author Manish Kakkar
  */
     
-    vector<ArmSegment> segments;
-    Vect endPoint;
-    GraphicsContext gc;
-    private Canvas canvas;
    
-    public Arm() {
-    
+    // GraphicsContext gc;
+    // private Canvas canvas;
+   
+    class Arm {
+         
+        public:
+            std::vector<ArmSegment> segments;
+            Vect endPoint;
+
+            Arm();
+            void reset();
+            std::string toString();
+            void updateArm();
+            void setArmAngle(double d,int armIndex);
+            void moveEndpointToDest(Vect ep);
+
+    };    
+
+    Arm::Arm(){
         //for (int i = 0 ; i < 30 ; i++) 
         //    segments.add(new ArmSegment(7.0,0.0,120)) ;
-            segments.push_back(ArmSegment(100.0,0.0,150));
-            segments.push_back(ArmSegment(80.0,0.0,150));
-            segments.push_back(ArmSegment(60.0,0.0,150));
-    }    
+        segments.push_back(ArmSegment(100.0,0.0,150));
+        segments.push_back(ArmSegment(80.0,0.0,150));
+        segments.push_back(ArmSegment(60.0,0.0,150));
+    }
     
     // void setGC(GraphicsContext gc) {
     //     this.gc = gc ;
     // }
     
-    void reset() {
+    void Arm::reset() {
         for(int i=1;i<numSegments;i++){                
             segments[i].setAngle(0);
         }
     }
 
-    String toString() {
-        return segments.end().toString() ;
+    std::string Arm::toString() {
+        return segments.end()->toString();
     }
 
-    void updateArm() {
+    void Arm::updateArm() {
         ArmSegment mountPoint(0.0,0.0,0) ;
         for(int i=1;i<numSegments;i++){                
             segments[i].updateEndpoint(mountPoint);
-            mountPoint = segment;
+            mountPoint = segments[i];
         }
         // Endpoint arm is endpoint last segement.
-        endPoint = segments.end().endPoint;
+        endPoint = segments.end()->endPoint;
      }
 
     // public void drawArm() {
     //     for(ArmSegment segment: segments) {
     //         segment.drawSegment(gc);
     //     }
-        
+         
     // }
 
-    void setArmAngle(double d,int armIndex) {
+    void Arm::setArmAngle(double d,int armIndex) {
         segments.at(armIndex).setAngle(d);
     }
 
-    void moveEndpointToDest(Vect ep){
+    void Arm::moveEndpointToDest(Vect ep){
         int back = numSegments - 1 ;  // Last arm segment index.
         int loopcount = 0 ;
         
@@ -79,9 +92,10 @@ using namespace std;
             // drawArm() ;
             //INSERT REAL ARM CODE HERE
             
-            back = numSegments.size() - 1 ;
+            back = numSegments - 1 ;
+            cout << loopcount + "\n";
            // Thread.sleep(20);
-            System.out.println(loopcount);
+            //System.out.println(loopcount);
         }
         //INSTER REAL ARM CODE HERE
         //drawArm();

@@ -1,12 +1,14 @@
 #pragma once
+#include <math.h>
 
 class Vect {
 private:
+
+public:
 	double x;
 	double y;
 	double z;
 
-public:
 	Vect();
 	Vect(double, double, double);
 
@@ -32,6 +34,15 @@ public:
 		return x * other.getX() + y * other.getY() + z * other.getZ();
 	}
 
+	double angle(Vect other) {
+		double dot = this->dot(other);
+		/* need to doublecheck if angle calculation is right*/
+		double otherLength = other.length();
+		double thisLength = length();
+		double angle = acos(dot/(otherLength+thisLength));
+			return angle;
+	}
+
 	Vect cross(Vect other) {
 		double x_ = y * other.getZ() - z * other.getY();
 		double y_ = z * other.getX() - x * other.getZ();
@@ -54,6 +65,14 @@ public:
 
 	Vect operator / (const Vect &other) {
 		return Vect(x / other.x, y / other.y, z / other.z);
+	}
+
+	bool equals(Vect other) { //doublecheck if works
+		if(other.x == x && other.y == y && other.z == z){
+			return true;
+		} 
+
+		return false;
 	}
 };
 
