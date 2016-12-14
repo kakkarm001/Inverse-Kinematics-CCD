@@ -9,30 +9,20 @@
 
 #define numSegments 3
 
-
-
 /**
  *  
  * @author Manish Kakkar
  */
-    
-   
-    // GraphicsContext gc;
-    // private Canvas canvas
+
     Arm::Arm(){
-        //for (int i = 0 ; i < 30 ; i++) 
-        //    segments.add(new ArmSegment(7.0,0.0,120)) ;
         segments.push_back(ArmSegment(100.0,0.0,150));
         segments.push_back(ArmSegment(80.0,0.0,150));
         segments.push_back(ArmSegment(60.0,0.0,150));
     }
     
-    // void setGC(GraphicsContext gc) {
-    //     this.gc = gc ;
-    // }
-    
+
     void Arm::reset() {
-        for(int i=1;i<numSegments;i++){                
+        for(int i=0;i<numSegments;i++){                
             segments[i].setAngle(0);
         }
         //debug
@@ -40,28 +30,21 @@
     }
 
     std::string Arm::toString() {
-        return segments.end()->toString();
+        return segments[segments.size()-1].toString();
     }
 
     void Arm::updateArm() {
         ArmSegment mountPoint(0.0,0.0,0) ;
-        for(int i=1;i<numSegments;i++){                
+        for(int i=0;i<numSegments;i++){                
             segments[i].updateEndpoint(mountPoint);
 
-            std::cout << "\n DURING POSITION FOR : " + i;  
+            std::cout << "\n DURING POSITION FOR : ";  
             std::cout <<  segments[i].toString() + "\n";
             mountPoint = segments[i];
         }
         // Endpoint arm is endpoint last segement.
-        endPoint = segments.end()->endPoint;
+        endPoint = segments[segments.size()-1].endPoint;
      }
-
-    // public void drawArm() {
-    //     for(ArmSegment segment: segments) {
-    //         segment.drawSegment(gc);
-    //     }
-         
-    // }
 
     void Arm::setArmAngle(double d,int armIndex) {
         segments.at(armIndex).setAngle(d);
@@ -72,7 +55,7 @@
         int loopcount = 0 ;
         
         while (!ep.equals(endPoint)) { 
-            if ( loopcount++ == 1000 ) break ;
+            if ( loopcount++ == 100 ) break ;
             while ( back >= 0 ) {
                 segments[back].rotateMe(ep, endPoint) ;
                 updateArm();

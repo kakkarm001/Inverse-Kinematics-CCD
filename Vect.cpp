@@ -39,11 +39,11 @@
 
 	double Vect::angle(Vect other) {
 		double dot = this->dot(other);
-		/* need to doublecheck if angle calculation is right*/
-		double otherLength = other.length();
-		double thisLength = length();
-		double angle = acos(dot/(otherLength+thisLength));
-			return angle;
+		double vDot = (dot/ (this->length()*other.length()));
+
+		if(vDot < -1.0) vDot = -1.0;
+		if(vDot > 1.0) vDot = 1.0;
+		return (acos(vDot));
 	}
 
 	Vect Vect::cross(Vect other) {

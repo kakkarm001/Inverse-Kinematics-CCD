@@ -26,8 +26,13 @@
     // }
 
     ArmSegment::ArmSegment(double length, double angle, double maxAngle) {
-        // endPoint = new Vector3d();
-        // mountPoint = new Vector3d();
+        //change syntax when this works
+        Vect tempendpoint(0,0,0);       
+        endPoint = tempendpoint;
+
+        Vect tempmountpoint(0,0,0);
+        mountPoint = tempmountpoint;
+        calculatedAngle=0;
         
 
         this->angle = angle;
@@ -38,8 +43,8 @@
     void ArmSegment::updateEndpoint(ArmSegment mountedOnArm) {
         calculatedAngle = mountedOnArm.calculatedAngle + angle;
         // NOTE: Angle is 90 degrees shifted counter clock wise.
-        endPoint.x = mountedOnArm.endPoint.x + length * cos(toRadians(calculatedAngle));
-        endPoint.y = mountedOnArm.endPoint.y + length * sin(toRadians(calculatedAngle));
+        endPoint.x = mountedOnArm.endPoint.x + (length * -sin(toRadians(calculatedAngle))); 
+        endPoint.y = mountedOnArm.endPoint.y + (length * cos(toRadians(calculatedAngle)));
 
         mountPoint.x = mountedOnArm.endPoint.x;
         mountPoint.y = mountedOnArm.endPoint.y;
@@ -47,7 +52,7 @@
     }
 
     double ArmSegment::toRadians(double angleInDegrees){
-         return (angleInDegrees * pi)  / 180; //TODO: maybe turn into double
+         return (angleInDegrees * pi)  / 180.0; //TODO: maybe turn into double
     }
 
     double ArmSegment::toDegrees(double radians) {
@@ -58,13 +63,11 @@
     //     gc.strokeLine(300 + mountPoint.y, 250 - mountPoint.x, 300 + endPoint.y, 250 - endPoint.x);
     //     gc.fillOval(297 + endPoint.y, 247 - endPoint.x, 6, 5);
     // }
-
     
     std::string ArmSegment::toString() {
         return "Arm mountpoint:" + doubleToString(mountPoint.x) + "," +
         doubleToString(mountPoint.y) + 
         " endpoint:" + doubleToString(endPoint.x) + "," + doubleToString(endPoint.y);
-       // return "I coudnt fix this yet so I return this random string";
     }
 
     void ArmSegment::setAngle(double d) {
@@ -78,8 +81,8 @@
  * @return void.
  */
     void ArmSegment::rotateMe(Vect targetEndpoint, Vect armEndpoint) {
-        Vect r;
-        Vect p;
+        Vect r;//target
+        Vect p;//current
         Vect cross;
 
         r.x = targetEndpoint.x - mountPoint.x;
