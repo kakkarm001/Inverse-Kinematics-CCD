@@ -1,5 +1,5 @@
-# InverseKinematicsFabrik
-Inverse Kinematics implementation using Fabrik method in c++.
+# Inverse Kinematics CCD
+Inverse Kinematics implementation using CCD method in c++.
 
 
 
