@@ -20,7 +20,7 @@ using namespace std;
             cout << "main is reached running program\n";
 
             //create new position vector
-            Vect newDest(30.0, 100.0, 30.0);
+            Vect newDest(290.0, 150.0, 0.0);
 
             a.reset();
             a.updateArm();

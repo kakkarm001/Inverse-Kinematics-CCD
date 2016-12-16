@@ -15,9 +15,9 @@
  */
 
     Arm::Arm(){
-        segments.push_back(ArmSegment(100.0,0.0,150));
-        segments.push_back(ArmSegment(80.0,0.0,150));
-        segments.push_back(ArmSegment(60.0,0.0,150));
+        segments.push_back(ArmSegment(150.0,0.0,300));
+        segments.push_back(ArmSegment(150.0,0.0,300));
+        segments.push_back(ArmSegment(140.0,0.0,300));
     }
     
 

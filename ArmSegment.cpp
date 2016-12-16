@@ -43,8 +43,8 @@
     void ArmSegment::updateEndpoint(ArmSegment mountedOnArm) {
         calculatedAngle = mountedOnArm.calculatedAngle + angle;
         // NOTE: Angle is 90 degrees shifted counter clock wise.
-        endPoint.x = mountedOnArm.endPoint.x + (length * -sin(toRadians(calculatedAngle))); 
-        endPoint.y = mountedOnArm.endPoint.y + (length * cos(toRadians(calculatedAngle)));
+        endPoint.x = mountedOnArm.endPoint.x + (length * cos(toRadians(calculatedAngle))); 
+        endPoint.y = mountedOnArm.endPoint.y + (length * sin(toRadians(calculatedAngle)));
 
         mountPoint.x = mountedOnArm.endPoint.x;
         mountPoint.y = mountedOnArm.endPoint.y;
@@ -58,11 +58,6 @@
     double ArmSegment::toDegrees(double radians) {
         return radians * (180.0 / pi);
     }
-
-    // void drawSegment(GraphicsContext gc) {
-    //     gc.strokeLine(300 + mountPoint.y, 250 - mountPoint.x, 300 + endPoint.y, 250 - endPoint.x);
-    //     gc.fillOval(297 + endPoint.y, 247 - endPoint.x, 6, 5);
-    // }
     
     std::string ArmSegment::toString() {
         return "Arm mountpoint:" + doubleToString(mountPoint.x) + "," +
